@@ -1,0 +1,129 @@
+
+<div id="userpage-background">
+  <div class="container">
+    <h1 id="travel-page-title">User's Travel Page</h1>
+      <div class="row">
+        <h2>Your Places of Interest</h2>
+        <div id="travel-list" class="col-sm-6 text-center">
+            <ul>
+              <li>Montery Bay Aquarium</li>
+              <li>Golden Gate Bridge</li>
+              <li>California Institute Museum</li>
+              <li>Tenderloin</li>
+              <li>sdfjasdlfj</li>
+              <li>Somewhere else in Cali</li>
+              <li>Montery Bay Aquarium</li>
+              <li>Golden Gate Bridge</li>
+              <li>California Institute Museum</li>
+              <li>Tenderloin nooo</li>
+              <li>Somewhere else in Cali</li>
+              <li>Montery Bay Aquarium</li>
+              <li>Golden Gate Bridge</li>
+              <li>California Institute Museum</li>
+              <li>Tenderloin nooo</li>
+              <li>Somewhere else in Cali</li>
+              <li>Montery Bay Aquarium</li>
+              <li>Golden Gate Bridge</li>
+              <li>California Institute Museum</li>
+              <li>Tenderloin nooo</li>
+              <li>Somewhere else in Cali</li>
+            </ul>
+        </div>
+        <form action="/location" method="post">
+            <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+            <input id="latitude" type="hidden" name="latitude" value="">
+            <input id="longitude" type="hidden" name="longitude" value="">
+            <input id="data" type="hidden" name="data" value="">
+            <input type="submit" value="BUTTON">
+          </form>
+        <div id="googleMap">
+          <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+
+    <div id="map"></div>
+    <script>
+// This example adds a search box to a map, using the Google Place Autocomplete
+// feature. People can enter geographical searches. The search box will return a
+// pick list containing a mix of places and predicted search terms.
+
+function initAutocomplete() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -33.8688, lng: 151.2195},
+    zoom: 13,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  });
+
+  // Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+
+  var markers = [];
+  // [START region_getplaces]
+  // Listen for the event fired when the user selects a prediction and retrieve
+  // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+    console.log(places);
+    $("#longitude").val(places[0].geometry.location.G);
+    $("#latitude").val(places[0].geometry.location.K);
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    markers = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+    var listener = google.maps.event.addListener(map, "idle", function() {
+      if (map.getZoom() > 16) map.setZoom(16);
+      google.maps.event.removeListener(listener);
+    });
+  });
+  // [END region_getplaces]
+}
+
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
+         async defer></script>
+  </div>
+
+      </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,75 @@
+#userpage-background {
+    background-image: url("main_background.jpg");
+    background-postition: center;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#travel-list {
+    margin-top: 1%;
+    border: 4px solid white;
+    border-radius: 3%;
+    opacity: 0.8;
+    background-color: #989898;
+    height: 400px;
+    width: 40%;
+    overflow: scroll;
+    color: white;
+    font-size: 1.5em;
+}
+#travel-list li {
+    display: block;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+#googleMap {
+        height: 500px;
+        margin-left: 45%;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+

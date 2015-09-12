@@ -1,0 +1,26 @@
+#login-background {
+    background-image: url("login_background.jpg");
+    background-postition: center;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#login-content {
+    margin-top: 8%;
+}
+    #login-content h1 {
+        margin-left: 35%;
+    }
+#social-login {
+    margin-left: 8%;
+}
+#register-content h1{
+    margin-left: 35%;
+}
+.error {
+    margin-left: 35%;
+    color: white;
+    font-weight: bold;
+    font-size: .6em;
+    display: block;
+}
