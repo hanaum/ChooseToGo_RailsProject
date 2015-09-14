@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909235806) do
+ActiveRecord::Schema.define(version: 20150912051218) do
 
   create_table "likes", force: :cascade do |t|
     t.integer  "user_id"
@@ -30,7 +30,11 @@ ActiveRecord::Schema.define(version: 20150909235806) do
     t.float    "latitude"
     t.float    "longitude"
     t.text     "description"
+    t.string   "address"
+    t.integer  "user_id"
   end
+
+  add_index "locations", ["user_id"], name: "index_locations_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"

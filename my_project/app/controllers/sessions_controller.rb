@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
             session[:id] = user.id
-            redirect_to "/users/#{current_user.id}"
+            redirect_to "/users"
         else
             flash[:error] = "Invalid email/password confirmation"
             redirect_to "/users/create"

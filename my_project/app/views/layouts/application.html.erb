@@ -10,11 +10,12 @@
 </head>
 <body>
 <% if current_user %>
-  <form action='/sessions' method='post'>
+  <form style="display: inline-block;" action='/sessions' method='post'>
     <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
     <input type='hidden' name='_method' value='delete'>
-    <input type='submit' value='Log Out'>
+    <input style="display: inline-block;" class="btn btn-logout btn-lg" type='submit' value='Log Out'>
   </form>
+  <a style="display: inline-block;" class="btn btn-light btn-lg" href="/users/<%=current_user.id%>">Your Travel History</a>
 <% end %>
 <%= yield %>
 

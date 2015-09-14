@@ -17,6 +17,10 @@
 #register-content h1{
     margin-left: 35%;
 }
+.btn-logout {
+    background-color: #99CCCC;
+    opacity: 0.5%;
+}
 .error {
     margin-left: 35%;
     color: white;

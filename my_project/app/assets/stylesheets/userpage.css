@@ -21,7 +21,20 @@
     display: block;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
-
+#add-form {
+  margin-left: 5%;
+  display: inline-block;
+}
+#add-error {
+  display: inline-block;
+}
+.places-link {
+  color: white;
+  background: transparent;
+}
+.places-link:hover {
+  color: #99CCCC;
+}
 #googleMap {
         height: 500px;
         margin-left: 45%;

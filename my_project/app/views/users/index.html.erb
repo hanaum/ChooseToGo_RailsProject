@@ -1,41 +1,34 @@
 
 <div id="userpage-background">
   <div class="container">
-    <h1 id="travel-page-title">User's Travel Page</h1>
+    <h1 id="travel-page-title"><%=current_user.first_name%>'s Travel Page</h1>
       <div class="row">
         <h2>Your Places of Interest</h2>
         <div id="travel-list" class="col-sm-6 text-center">
-            <ul>
-              <li>Montery Bay Aquarium</li>
-              <li>Golden Gate Bridge</li>
-              <li>California Institute Museum</li>
-              <li>Tenderloin</li>
-              <li>sdfjasdlfj</li>
-              <li>Somewhere else in Cali</li>
-              <li>Montery Bay Aquarium</li>
-              <li>Golden Gate Bridge</li>
-              <li>California Institute Museum</li>
-              <li>Tenderloin nooo</li>
-              <li>Somewhere else in Cali</li>
-              <li>Montery Bay Aquarium</li>
-              <li>Golden Gate Bridge</li>
-              <li>California Institute Museum</li>
-              <li>Tenderloin nooo</li>
-              <li>Somewhere else in Cali</li>
-              <li>Montery Bay Aquarium</li>
-              <li>Golden Gate Bridge</li>
-              <li>California Institute Museum</li>
-              <li>Tenderloin nooo</li>
-              <li>Somewhere else in Cali</li>
+          <ul>
+          <% @locations.each do |loc| %>
+              <li>
+                <form action="/location/<%=loc.id%>" method="post">
+                  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                  <input class="places-link" type="submit" value="<%=loc.name%>">
+                </form>
+              </li>
+          <%end%>
             </ul>
+
         </div>
-        <form action="/location" method="post">
+        <form action="/location" id="add-form" method="post">
             <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
             <input id="latitude" type="hidden" name="latitude" value="">
             <input id="longitude" type="hidden" name="longitude" value="">
-            <input id="data" type="hidden" name="data" value="">
-            <input type="submit" value="BUTTON">
+            <input id="loc_name" type="hidden" name="loc_name" value="">
+            <input id="address" type="hidden" name="address" value="">
+            <input class="btn btn-logout btn-lg" type="submit" value="Add to your list">
           </form>
+          <% if flash[:error] %>
+            <p id="add-error"><%=flash[:error]%></p>
+          <%end%>
+          <p></p>
         <div id="googleMap">
           <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 
@@ -72,9 +65,11 @@ function initAutocomplete() {
     if (places.length == 0) {
       return;
     }
-    console.log(places);
+    console.log(places[0].name);
     $("#longitude").val(places[0].geometry.location.G);
     $("#latitude").val(places[0].geometry.location.K);
+    $("#address").val(places[0].formatted_address);
+    $("#loc_name").val(places[0].name);
     // Clear out the old markers.
     markers.forEach(function(marker) {
       marker.setMap(null);
