@@ -17,12 +17,16 @@
             </ul>
 
         </div>
+        <div id="location">
+
+        </div>
         <form action="/location" id="add-form" method="post">
             <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
             <input id="latitude" type="hidden" name="latitude" value="">
             <input id="longitude" type="hidden" name="longitude" value="">
             <input id="loc_name" type="hidden" name="loc_name" value="">
             <input id="address" type="hidden" name="address" value="">
+            <input id="loc_data" type="hidden" name="loc_data" value="">
             <input class="btn btn-logout btn-lg" type="submit" value="Add to your list">
           </form>
           <% if flash[:error] %>
@@ -37,7 +41,6 @@
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
-
 function initAutocomplete() {
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -33.8688, lng: 151.2195},
@@ -65,11 +68,12 @@ function initAutocomplete() {
     if (places.length == 0) {
       return;
     }
-    console.log(places[0].name);
+    console.log(places);
     $("#longitude").val(places[0].geometry.location.G);
     $("#latitude").val(places[0].geometry.location.K);
     $("#address").val(places[0].formatted_address);
     $("#loc_name").val(places[0].name);
+    $("#loc_data").val(JSON.stringify(places));
     // Clear out the old markers.
     markers.forEach(function(marker) {
       marker.setMap(null);
@@ -108,10 +112,8 @@ function initAutocomplete() {
       google.maps.event.removeListener(listener);
     });
   });
-  // [END region_getplaces]
+  // [END region_getplaces]}
 }
-
-
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
          async defer></script>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150912051218) do
+ActiveRecord::Schema.define(version: 20150914031516) do
 
   create_table "likes", force: :cascade do |t|
     t.integer  "user_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20150912051218) do
     t.text     "description"
     t.string   "address"
     t.integer  "user_id"
+    t.text     "data"
   end
 
   add_index "locations", ["user_id"], name: "index_locations_on_user_id"

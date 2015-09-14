@@ -1,7 +1,10 @@
 class LocationsController < ApplicationController
     def create
+
+        data = JSON(params[:loc_data])
+        # render :text => data[0]["address_components"]
         location = Location.new(name: params[:loc_name], latitude: params[:latitude],
-            longitude: params[:longitude], address: params[:address], user: User.find(current_user.id))
+            longitude: params[:longitude], address: params[:address], user: User.find(current_user.id), data: data)
         if location.save
             redirect_to "/users"
         else

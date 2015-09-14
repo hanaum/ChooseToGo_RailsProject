@@ -3,4 +3,5 @@ class Location < ActiveRecord::Base
     has_many :likes, dependent: :destroy
     has_many :users_liked, through: :likes, source: :user
     validates :name, presence: true
+    serialize :data, JSON
 end
