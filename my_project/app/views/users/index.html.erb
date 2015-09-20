@@ -3,18 +3,39 @@
   <div class="container">
     <h1 id="travel-page-title"><%=current_user.first_name%>'s Travel Page</h1>
       <div class="row">
-        <h2>Your Places of Interest</h2>
-        <div id="travel-list" class="col-sm-6 text-center">
-          <ul>
-          <% @locations.each do |loc| %>
-              <li>
-                <form action="/location/<%=loc.id%>" method="post">
+        <h2 id="interest-title">Your Places of Interest:</h2>
+        <div id="travel-list" class="col-sm-6 text-left">
+
+          <table>
+            <thead>
+              <td>Locations</td>
+              <td>Actions</td>
+            </thead>
+
+            <% @locations.each do |loc| %>
+            <tbody>
+              <td>
+                <form class="location-list-buttons" action="/location/<%=loc.id%>" method="post">
                   <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
                   <input class="places-link" type="submit" value="<%=loc.name%>">
                 </form>
-              </li>
-          <%end%>
-            </ul>
+              </td>
+              <td>
+                <form class="location-list-buttons">
+                  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                  <input class="location-options-visited" type="submit" value="Visited">
+                </form>
+                <form class="location-list-buttons" action="/location/<%=loc.id%>" method="post">
+                  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                  <input type="hidden" name="_method" value="delete">
+                  <input class="location-options-remove" type="submit" value="Remove">
+                </form>
+              </td>
+            <%end%>
+
+            </tbody>
+          </table>
+
 
         </div>
         <div id="location">
@@ -32,7 +53,7 @@
           <% if flash[:error] %>
             <p id="add-error"><%=flash[:error]%></p>
           <%end%>
-          <p></p>
+
         <div id="googleMap">
           <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 
@@ -41,12 +62,21 @@
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
-function initAutocomplete() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -33.8688, lng: 151.2195},
+var map;
+var start_marker;
+function displayMap(position) {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: position.coords.latitude, lng: position.coords.longitude},
     zoom: 13,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
+
+  start_marker = new google.maps.Marker({
+    position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+    animation: google.maps.Animation.DROP,
+    title: "you are here"
+  });
+
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
@@ -57,6 +87,7 @@ function initAutocomplete() {
   map.addListener('bounds_changed', function() {
     searchBox.setBounds(map.getBounds());
   });
+  start_marker.setMap(map);
 
   var markers = [];
   // [START region_getplaces]
@@ -112,8 +143,14 @@ function initAutocomplete() {
       google.maps.event.removeListener(listener);
     });
   });
-  // [END region_getplaces]}
+  // [END region_getplaces]
 }
+
+function initAutocomplete() {
+  navigator.geolocation.getCurrentPosition(displayMap);
+}
+
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
          async defer></script>

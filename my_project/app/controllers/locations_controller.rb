@@ -27,4 +27,9 @@ class LocationsController < ApplicationController
         # render json: website
         redirect_to "#{website.businesses[0].mobile_url}"
     end
+    def destroy
+        location = Location.find(params[:id])
+        location.destroy
+        redirect_to "/users"
+    end
 end
