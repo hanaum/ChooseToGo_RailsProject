@@ -1,0 +1,19 @@
+<div id="history-background">
+    <div class="container">
+        <a href="/users" style="color: white;">Back To homepage</a>
+        <h1>Your Travel History</h1>
+        <div id="history-list" class="col-sm-5 text-left">
+            <ul>
+            <% @locations.each do |loc|%>
+                <li class="history-list">
+                    <form action="/location/<%=loc.id%>" method="post">
+                      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                      <input class="history-link" type="submit" value="<%=loc.name%>">
+                    </form>
+                </li>
+            <%end%>
+            </ul>
+        </div>
+    </div>
+
+</div>

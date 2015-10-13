@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
             redirect_to "/users"
         else
             flash[:error] = "Invalid email/password confirmation"
-            redirect_to "/users/create"
+            redirect_to "/sessions/new"
         end
     end
     def destroy

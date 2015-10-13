@@ -33,6 +33,9 @@
     margin-top: 1%;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
+#thead-align {
+  width: 75%;
+}
 #add-form {
   margin-left: 2%;
   display: inline-block;
@@ -41,8 +44,10 @@
   display: inline-block;
 }
 .places-link {
-  color: white;
+  color: #CC6633;
   background: transparent;
+  border: none;
+  border-radius: 3px;
 }
 .places-link:hover {
   color: #336699;
@@ -55,7 +60,7 @@
 }
 
 .location-options-visited {
-  background-color: purple;
+  background-color: #CC6633;
   border: none;
   border-radius: 3px;
   font-size: .5em;

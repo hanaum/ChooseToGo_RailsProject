@@ -7,8 +7,10 @@ Rails.application.routes.draw do
   get 'users' => 'users#index'
   post 'location' => 'locations#create'
   post 'location/:id' => 'locations#search'
+  get 'users/:id' => 'users#history'
   delete 'sessions' => 'sessions#destroy'
   delete 'location/:id' => 'locations#destroy'
+  patch 'location/:id' => 'locations#edit'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
