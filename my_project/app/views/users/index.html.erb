@@ -71,7 +71,7 @@ var start_marker;
 var lat_arr = document.getElementsByClassName("places-lat");
 var lon_arr = document.getElementsByClassName("places-lon");
 var nameOfLoc_arr = document.getElementsByClassName("places-name");
-console.log($(lat[0]).val());
+console.log($(lat_arr[0]).val());
 var info_arr = [];
 var markers_arr = [];
 function displayMap(position) {
@@ -87,9 +87,21 @@ function displayMap(position) {
     title: "you are here"
   });
   // console.log(typeof $(".places-info").val());
-  // for (var i = 0; i < other_markers_array.length; i++) {
-  //   console.log(other_markers_array[i].val());
+  for (var i = 0; i < lon_arr.length; i++) {
+    var inner_arr = [];
+    inner_arr.push($(lat_arr[i]).val());
+    inner_arr.push($(lon_arr[i]).val());
+    inner_arr.push($(nameOfLoc_arr[i]).val());
+    info_arr.push(inner_arr);
+  }
+  // for (var j = 0; j < info_arr.length; j++) {
+  //   var loc_marker = new google.maps.Marker({
+  //     position: new google.maps.LatLng(parseInt(info_arr[i][0]), position.coords.longitude),
+  //     animation: google.maps.Animation.DROP,
+  //     title: "you are here"
+  //   });
   // }
+  console.log(inner_arr);
 
 
 
