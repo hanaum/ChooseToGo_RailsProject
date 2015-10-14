@@ -53,11 +53,10 @@
             <input id="address" type="hidden" name="address" value="">
             <input id="loc_data" type="hidden" name="loc_data" value="">
             <input class="btn btn-logout btn-lg" type="submit" value="Add to your list">
-          </form>
+        </form>
           <% if flash[:error] %>
             <p id="add-error"><%=flash[:error]%></p>
           <%end%>
-
         <div id="googleMap">
           <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 
@@ -71,9 +70,9 @@ var start_marker;
 var lat_arr = document.getElementsByClassName("places-lat");
 var lon_arr = document.getElementsByClassName("places-lon");
 var nameOfLoc_arr = document.getElementsByClassName("places-name");
-console.log($(lat_arr[0]).val());
 var info_arr = [];
 var markers_arr = [];
+
 function displayMap(position) {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: position.coords.latitude, lng: position.coords.longitude},
@@ -86,7 +85,6 @@ function displayMap(position) {
     animation: google.maps.Animation.DROP,
     title: "you are here"
   });
-  // console.log(typeof $(".places-info").val());
   for (var i = 0; i < lon_arr.length; i++) {
     var inner_arr = [];
     inner_arr.push($(lat_arr[i]).val());
@@ -94,16 +92,14 @@ function displayMap(position) {
     inner_arr.push($(nameOfLoc_arr[i]).val());
     info_arr.push(inner_arr);
   }
-  // for (var j = 0; j < info_arr.length; j++) {
-  //   var loc_marker = new google.maps.Marker({
-  //     position: new google.maps.LatLng(parseInt(info_arr[i][0]), position.coords.longitude),
-  //     animation: google.maps.Animation.DROP,
-  //     title: "you are here"
-  //   });
-  // }
-  console.log(inner_arr);
-
-
+  for (var j = 0; j < info_arr.length; j++) {
+    var loc_marker = new google.maps.Marker({
+      position: new google.maps.LatLng(parseFloat(info_arr[j][0]), parseFloat(info_arr[j][1])),
+      animation: google.maps.Animation.DROP,
+      title: info_arr[j][2]
+    });
+    markers_arr.push(loc_marker);
+  }
 
   // Create the search box and link it to the UI element.
   var input = document.getElementById('pac-input');
@@ -115,6 +111,9 @@ function displayMap(position) {
     searchBox.setBounds(map.getBounds());
   });
   start_marker.setMap(map);
+  for (var k = 0; k < markers_arr.length; k++) {
+    markers_arr[k].setMap(map);
+  }
 
   var markers = [];
   // [START region_getplaces]
@@ -126,11 +125,13 @@ function displayMap(position) {
     if (places.length == 0) {
       return;
     }
-    console.log(places);
-    $("#longitude").val(places[0].geometry.location.G);
-    $("#latitude").val(places[0].geometry.location.K);
+    console.log("HERE", places);
+    $("#longitude").val(places[0].geometry.location.lng());
+    $("#latitude").val(places[0].geometry.location.lat());
     $("#address").val(places[0].formatted_address);
     $("#loc_name").val(places[0].name);
+    places[0].latitude = places[0].geometry.location.lat();
+    places[0].longitude = places[0].geometry.location.lng();
     $("#loc_data").val(JSON.stringify(places));
     // Clear out the old markers.
     markers.forEach(function(marker) {

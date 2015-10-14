@@ -2,9 +2,8 @@ class LocationsController < ApplicationController
     def create
 
         data = JSON(params[:loc_data])
-        # render :text => data[0]["geometry"]["location"]["H"]
-        latitude = data[0]["geometry"]["location"]["H"]
-        longitude = data[0]["geometry"]["location"]["L"]
+        latitude = data[0]["latitude"]
+        longitude = data[0]["longitude"]
         location = Location.new(name: params[:loc_name], latitude: latitude,
             longitude: longitude, address: params[:address], visited: 0, user: User.find(current_user.id), data: data)
         if location.save
@@ -16,9 +15,6 @@ class LocationsController < ApplicationController
     end
     def search
         location = Location.find(params[:id])
-        # coordinates = { latitude: location.latitude, longitude: location.longitude}
-        # parameters = { term: 'New York'}
-        #render :text => location.latitude.is_a?(Float)
         coordinates = { latitude: location.latitude, longitude: location.longitude }
         params = { term: location.name,
            limit: 3
@@ -26,7 +22,6 @@ class LocationsController < ApplicationController
 
         locale = { lang: 'en' }
         website = Yelp.client.search_by_coordinates(coordinates, params, locale)
-        # render json: website
         redirect_to "#{website.businesses[0].mobile_url}"
     end
     def edit
