@@ -43,6 +43,12 @@
 #add-error {
   display: inline-block;
 }
+#distance-info {
+  width: 200px;
+  height: 20px;
+  background-color: white;
+  display: inline-block;
+}
 .places-link {
   color: #CC6633;
   background: transparent;
