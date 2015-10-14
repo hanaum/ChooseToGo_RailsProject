@@ -1,40 +1,33 @@
 <div id="login-background">
-    <div class="row">
-        <div id="login-content">
-            <h1>Register</h1>
-
-                <% if flash[:errors] %>
-                    <% flash[:errors].each do |error| %>
-                        <p class="error"><%=error%></p>
-                    <%end%>
-                <%end%>
-
-
-            <div id="social-login" class="col-md-3" >
-                <a href="#"><img src="http://techulus.com/buttons/fb.png" /></a><br/>
-                <a href="#"><img src="http://techulus.com/buttons/tw.png" /></a><br/>
-                <a href="#"><img src="http://techulus.com/buttons/gplus.png" /></a>
-            </div>
-
-            <div class="col-md-7" style="border-left:1px solid #ccc;height:160px">
-                <form action="/users/create" method="post" class="form-horizontal">
-                    <fieldset>
-                    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
-                    <input id="textinput" name="first_name" type="text" placeholder="Enter first name" class="form-control input-md"><br>
-                    <input id="textinput" name="last_name" type="text" placeholder="Enter last name" class="form-control input-md"><br>
-                      <input id="textinput" name="email" type="text" placeholder="Enter Email" class="form-control input-md"><br>
-                      <input id="textinput" name="password" type="password" placeholder="Enter Password" class="form-control input-md"><br>
-                      <input id="textinput" name="confirmation_password" type="password" placeholder="Confirm Password" class="form-control input-md"><br>
-                      <input id="textinput" name="description" type="text" placeholder="Write a brief description about yourself" class="form-control input-md"><br>
-                      <div class="spacing"><a href="#"><small> Forgot Password?</small></a><br/></div>
-                      <input type="submit" id="singlebutton" class="btn btn-info btn-sm pull-right" value="Register">
-                      <a href="/sessions/new">Already Registered? Click here to sign in!</a>
-
-
-                    </fieldset>
-                </form>
-            </div>
-        </div>
+  <div class="row">
+    <div id="login-content">
+      <h1>Register</h1>
+      <% if flash[:errors] %>
+        <% flash[:errors].each do |error| %>
+          <p class="error"><%=error%></p>
+        <%end%>
+      <%end%>
+      <div id="social-login" class="col-md-3" >
+        <a href="#"><img src="http://techulus.com/buttons/fb.png" /></a><br/>
+        <a href="#"><img src="http://techulus.com/buttons/tw.png" /></a><br/>
+        <a href="#"><img src="http://techulus.com/buttons/gplus.png" /></a>
+      </div>
+      <div class="col-md-7" style="border-left:1px solid #ccc;height:160px">
+        <form action="/users/create" method="post" class="form-horizontal">
+          <fieldset>
+            <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+            <input id="textinput" name="first_name" type="text" placeholder="Enter first name" class="form-control input-md"><br>
+            <input id="textinput" name="last_name" type="text" placeholder="Enter last name" class="form-control input-md"><br>
+            <input id="textinput" name="email" type="text" placeholder="Enter Email" class="form-control input-md"><br>
+            <input id="textinput" name="password" type="password" placeholder="Enter Password" class="form-control input-md"><br>
+            <input id="textinput" name="confirmation_password" type="password" placeholder="Confirm Password" class="form-control input-md"><br>
+            <input id="textinput" name="description" type="text" placeholder="Write a brief description about yourself" class="form-control input-md"><br>
+            <div class="spacing"><a href="#"><small> Forgot Password?</small></a><br/></div>
+            <input type="submit" id="singlebutton" class="btn btn-info btn-sm pull-right" value="Register">
+            <a href="/sessions/new">Already Registered? Click here to sign in!</a>
+          </fieldset>
+        </form>
+      </div>
     </div>
-
+  </div>
 </div>

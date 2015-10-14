@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
     def index
     end
+
     def new
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
@@ -11,6 +12,7 @@ class SessionsController < ApplicationController
             redirect_to "/sessions/new"
         end
     end
+
     def destroy
         session[:id] = nil
         redirect_to "/main"

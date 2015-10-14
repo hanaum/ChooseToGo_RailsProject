@@ -1,6 +1,5 @@
 class LocationsController < ApplicationController
     def create
-
         data = JSON(params[:loc_data])
         latitude = data[0]["latitude"]
         longitude = data[0]["longitude"]
@@ -13,23 +12,23 @@ class LocationsController < ApplicationController
             redirect_to "/users"
         end
     end
+
     def search
         location = Location.find(params[:id])
-        coordinates = { latitude: location.latitude, longitude: location.longitude }
-        params = { term: location.name,
-           limit: 3
-         }
-
-        locale = { lang: 'en' }
+        coordinates = {latitude: location.latitude, longitude: location.longitude}
+        params = {term: location.name,limit: 3}
+        locale = {lang: 'en'}
         website = Yelp.client.search_by_coordinates(coordinates, params, locale)
         redirect_to "#{website.businesses[0].mobile_url}"
     end
+
     def edit
         location = Location.find(params[:id])
-        location.visited = 1;
+        location.visited = 1
         location.save
-        redirect_to "/users";
+        redirect_to "/users"
     end
+
     def destroy
         location = Location.find(params[:id])
         location.destroy
