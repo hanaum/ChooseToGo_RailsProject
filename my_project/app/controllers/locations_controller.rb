@@ -1,15 +1,20 @@
 class LocationsController < ApplicationController
     def create
-        data = JSON(params[:loc_data])
-        latitude = data[0]["latitude"]
-        longitude = data[0]["longitude"]
-        location = Location.new(name: params[:loc_name], latitude: latitude,
-            longitude: longitude, address: params[:address], visited: 0, user: User.find(current_user.id), data: data)
-        if location.save
-            redirect_to "/users"
-        else
+        if params[:loc_data].blank?
             flash[:error] = "You must add a valid location. Search below!"
             redirect_to "/users"
+        else
+            data = JSON(params[:loc_data])
+            latitude = data[0]["latitude"]
+            longitude = data[0]["longitude"]
+            location = Location.new(name: params[:loc_name], latitude: latitude,
+                longitude: longitude, address: params[:address], visited: 0, user: User.find(current_user.id), data: data)
+            if location.save
+                redirect_to "/users"
+            else
+                flash[:error] = "You must add a valid location. Search below!"
+                redirect_to "/users"
+            end
         end
     end
 
