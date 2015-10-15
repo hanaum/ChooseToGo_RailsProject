@@ -24,8 +24,6 @@ function displayMap(position) {
       var loc = {lat: parseFloat(info_arr[i][0]), lng: parseFloat(info_arr[i][1])};
       destinations.push(loc);
     }
-    console.log(destinations);
-    // destination = {lat: parseFloat(info_arr[0][0]), lng: parseFloat(info_arr[0][1])}
     var markersArray = [];
     var bounds = new google.maps.LatLngBounds;
     var geocoder = new google.maps.Geocoder;
@@ -62,12 +60,10 @@ function displayMap(position) {
             }
           };
         };
-        console.log(destinationList);
         var nearest_loc;
         var nearest_address;
         for (var i = 0; i < originList.length; i++) {
           var results = response.rows[i].elements;
-          console.log(results);
           var nearest_loc_dist = results[0].distance.value;
           for (var k = 0; k < results.length; k++) {
             if (nearest_loc_dist > results[k].distance.value) {
@@ -76,16 +72,13 @@ function displayMap(position) {
               nearest_address = destinationList[k];
             }
           }
-          console.log("destinationList", nearest_address);
           geocoder.geocode({'address': originList[i]},
               showGeocodedAddressOnMap(false));
-          // for (var j = 0; j < results.length; j++) {
             geocoder.geocode({'address': nearest_address},
                 showGeocodedAddressOnMap(true));
             outputDiv.innerHTML += originList[i] + ' to ' + nearest_address +
                 ': ' + nearest_loc.distance.text + ' in ' +
                 nearest_loc.duration.text + '<br>';
-          // }
         }
       }
     });
@@ -96,8 +89,6 @@ function displayMap(position) {
       markersArray = [];
     }
   })
-
-
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: position.coords.latitude, lng: position.coords.longitude},
