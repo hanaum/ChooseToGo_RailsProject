@@ -19,7 +19,7 @@ function displayMap(position) {
 
   // nearest location click trigger
   $("#nearest-loc-btn").click(function() {
-    $("#distance-info").show();
+    $("#distance-info-div").fadeIn("slow");
     for (var i = 0; i < info_arr.length; i++) {
       var loc = {lat: parseFloat(info_arr[i][0]), lng: parseFloat(info_arr[i][1])};
       destinations.push(loc);
@@ -41,8 +41,10 @@ function displayMap(position) {
       } else {
         var originList = response.originAddresses;
         var destinationList = response.destinationAddresses;
-        var outputDiv = document.getElementById('distance-info');
-        outputDiv.innerHTML = '';
+        var originDiv = document.getElementById('origin-loc');
+        var destinationDiv = document.getElementById('destination-loc');
+        originDiv.innerHTML = '';
+        destinationDiv.innerHTML = '';
         deleteMarkers(markersArray);
 
         var showGeocodedAddressOnMap = function(asDestination) {
@@ -61,6 +63,7 @@ function displayMap(position) {
           };
         };
         var nearest_loc;
+        var nearest_loc_name;
         var nearest_address;
         for (var i = 0; i < originList.length; i++) {
           var results = response.rows[i].elements;
@@ -69,6 +72,8 @@ function displayMap(position) {
             if (nearest_loc_dist > results[k].distance.value) {
               nearest_loc_dist = results[k].distance.value
               nearest_loc = results[k];
+              nearest_loc_name = info_arr[k][2];
+              console.log(nearest_loc_name);
               nearest_address = destinationList[k];
             }
           }
@@ -76,9 +81,10 @@ function displayMap(position) {
               showGeocodedAddressOnMap(false));
             geocoder.geocode({'address': nearest_address},
                 showGeocodedAddressOnMap(true));
-            outputDiv.innerHTML += originList[i] + ' to ' + nearest_address +
+            originDiv.innerHTML += 'Go from: ' + originList[i];
+            destinationDiv.innerHTML += ' To: ' + nearest_loc_name + ' at ' + nearest_address +
                 ': ' + nearest_loc.distance.text + ' in ' +
-                nearest_loc.duration.text + '<br>';
+                nearest_loc.duration.text;
         }
       }
     });

@@ -1,77 +1,88 @@
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#distance-info").hide();
+    $("#distance-info-div").hide();
   })
 </script>
 <div id="userpage-background">
   <div class="container">
-    <h1 id="travel-page-title"><%=current_user.first_name%>'s Travel Page</h1>
+      <div id="title-div">
+        <h1 id="travel-page-title"><%=current_user.first_name%>'s Travel Page</h1>
+        <div id="distance-info-div">
+          <div class="col-sm-12 col-lg-6" id="origin-loc"></div>
+          <div class="col-sm-12 col-lg-6" id="destination-loc"></div>
+        </div>
+      </div>
       <div class="row">
+        <div class="col-sm-12 col-lg-6">
+
         <h2 id="interest-title">Your Places of Interest:</h2>
 
-        <div id="travel-list" class="col-sm-12 col-lg-6 text-left">
-          <table>
-            <thead>
-              <td id="thead-align">Locations</td>
-              <td>Actions</td>
-            </thead>
-            <% @locations.each do |loc| %>
-            <tbody>
-              <td>
-                <form class="location-list-buttons" action="/location/<%=loc.id%>" method="post">
-                  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
-                  <input class="places-link" type="submit" value="<%=loc.name%>">
-                  <input class="places-name" type="hidden" value="<%=loc.name%>">
-                  <input class="places-lat" type="hidden" value="<%=loc.latitude%>">
-                  <input class="places-lon" type="hidden" value="<%=loc.longitude%>">
-                </form>
-              </td>
-              <td>
-                <form class="location-list-buttons" action="/location/<%=loc.id%>" method="post">
-                  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
-                  <input type="hidden" name="_method" value="patch">
-                  <input class="location-options-visited" type="submit" value="Visited">
-                </form>
-                <form class="location-list-buttons" action="/location/<%=loc.id%>" method="post">
-                  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
-                  <input type="hidden" name="_method" value="delete">
-                  <input class="location-options-remove" type="submit" value="Remove">
-                </form>
-              </td>
+          <div id="travel-list" class="col-sm-12 col-lg-6">
+            <table>
+              <thead>
+                <td><p id="thead-locations">Locations</p></td>
+                <td id="thead-actions">Actions</td>
+              </thead>
+              <% @locations.each do |loc| %>
+              <tbody>
+                <td>
+                  <form class="location-list-buttons" action="/location/<%=loc.id%>" method="post">
+                    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                    <input class="places-link" type="submit" value="<%=loc.name%>">
+                    <input class="places-name" type="hidden" value="<%=loc.name%>">
+                    <input class="places-lat" type="hidden" value="<%=loc.latitude%>">
+                    <input class="places-lon" type="hidden" value="<%=loc.longitude%>">
+                  </form>
+                </td>
+                <td>
+                  <form class="location-list-buttons" action="/location/<%=loc.id%>" method="post">
+                    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                    <input type="hidden" name="_method" value="patch">
+                    <input class="location-options-visited" type="submit" value="Visited">
+                  </form>
+                  <form class="location-list-buttons" action="/location/<%=loc.id%>" method="post">
+                    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                    <input type="hidden" name="_method" value="delete">
+                    <input class="location-options-remove" type="submit" value="Remove">
+                  </form>
+                </td>
+              <%end%>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+
+        <div id="map-div" class="col-sm-12 col-lg-6">
+
+          <div id="interactive-btns-search">
+            <form action="/location" id="add-form" method="post">
+                <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+                <input id="latitude" type="hidden" name="latitude" value="">
+                <input id="longitude" type="hidden" name="longitude" value="">
+                <input id="loc_name" type="hidden" name="loc_name" value="">
+                <input id="address" type="hidden" name="address" value="">
+                <input id="loc_data" type="hidden" name="loc_data" value="">
+                <input class="btn btn-logout btn-lg" type="submit" value="Add to your list">
+            </form>
+            <button class="btn btn-logout btn-lg" id="nearest-loc-btn" type="button">Nearest Location</button>
+            <% if flash[:error] %>
+              <p id="add-error"><%=flash[:error]%></p>
             <%end%>
 
-            </tbody>
-          </table>
-        </div>
-        <!-- <div id="TEST" class="col-lg-6"> -->
-        <div id="interactive-btns-search">
-          <form action="/location" id="add-form" method="post">
-              <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
-              <input id="latitude" type="hidden" name="latitude" value="">
-              <input id="longitude" type="hidden" name="longitude" value="">
-              <input id="loc_name" type="hidden" name="loc_name" value="">
-              <input id="address" type="hidden" name="address" value="">
-              <input id="loc_data" type="hidden" name="loc_data" value="">
-              <input class="btn btn-logout btn-lg" type="submit" value="Add to your list">
-          </form>
-          <button class="btn btn-logout btn-lg" id="nearest-loc-btn" type="button">Nearest Location</button>
-          <% if flash[:error] %>
-            <p id="add-error"><%=flash[:error]%></p>
-          <%end%>
-          <div id="distance-info"></div>
-        </div>
-        <div id="googleMap">
-          <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-      <div id="map"></div>
+          </div>
+          <div id="googleMap">
+              <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+            <div id="map"></div>
 
-    <script src="mainpage.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
-         async defer></script>
-  </div>
+            <script src="mainpage.js"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
+                 async defer></script>
+          </div>
 
-  <!-- </div> -->
-  </div>
-  </div>
-
-
+      </div>
+      </div>
+    </div>
 </div>
