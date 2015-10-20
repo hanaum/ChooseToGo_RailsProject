@@ -19,7 +19,7 @@ function displayMap(position) {
 
   // nearest location click trigger
   $("#nearest-loc-btn").click(function() {
-    $("#distance-info-div").fadeIn("slow");
+  //   $("#distance-info-div").fadeIn("slow");
     for (var i = 0; i < info_arr.length; i++) {
       var loc = {lat: parseFloat(info_arr[i][0]), lng: parseFloat(info_arr[i][1])};
       destinations.push(loc);
@@ -39,6 +39,7 @@ function displayMap(position) {
       if (status !== google.maps.DistanceMatrixStatus.OK) {
         alert('Error was: ' + status);
       } else {
+        console.log("hi");
         var originList = response.originAddresses;
         var destinationList = response.destinationAddresses;
         var originDiv = document.getElementById('origin-loc');
@@ -65,24 +66,35 @@ function displayMap(position) {
         var nearest_loc;
         var nearest_loc_name;
         var nearest_address;
+        var near_loc_name = document.getElementById('near-loc-name');
+        near_loc_name.innerHTML = '';
         for (var i = 0; i < originList.length; i++) {
           var results = response.rows[i].elements;
           var nearest_loc_dist = results[0].distance.value;
-          for (var k = 0; k < results.length; k++) {
+          for (var k = 1; k < results.length; k++) {
             if (nearest_loc_dist > results[k].distance.value) {
               nearest_loc_dist = results[k].distance.value
               nearest_loc = results[k];
               nearest_loc_name = info_arr[k][2];
-              console.log(nearest_loc_name);
+              near_loc_name.innerHTML = nearest_loc_name;
+              // console.log(nearest_loc_name);
               nearest_address = destinationList[k];
+            } else {
+              nearest_loc = results[0];
+              nearest_loc_name = info_arr[0][2];
+              console.log(nearest_loc_name);
+              nearest_address = destinationList[0];
+              near_loc_name.innerHTML = nearest_loc_name;
+              break;
             }
           }
+          console.log(nearest_loc);
           geocoder.geocode({'address': originList[i]},
               showGeocodedAddressOnMap(false));
             geocoder.geocode({'address': nearest_address},
                 showGeocodedAddressOnMap(true));
-            originDiv.innerHTML += 'Go from: ' + originList[i];
-            destinationDiv.innerHTML += ' To: ' + nearest_loc_name + ' at ' + nearest_address +
+            originDiv.innerHTML +=  originList[i];
+            destinationDiv.innerHTML += nearest_loc_name + ' at ' + nearest_address +
                 ': ' + nearest_loc.distance.text + ' in ' +
                 nearest_loc.duration.text;
         }
@@ -95,6 +107,7 @@ function displayMap(position) {
       markersArray = [];
     }
   })
+
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: position.coords.latitude, lng: position.coords.longitude},
@@ -138,9 +151,6 @@ function displayMap(position) {
   }
 
   var markers = [];
-  // [START region_getplaces]
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
   searchBox.addListener('places_changed', function() {
     var places = searchBox.getPlaces();
 

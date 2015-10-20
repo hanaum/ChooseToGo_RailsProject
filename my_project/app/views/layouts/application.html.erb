@@ -6,17 +6,23 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link href="http://fonts.googleapis.com/css?family=Berkshire+Swash" rel="stylesheet" type="text/css">
-
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
 </head>
 <body>
+<div id="userpage-background">
+
 <% if current_user %>
+<div class="container">
   <form style="display: inline-block;" action='/sessions' method='post'>
     <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
     <input type='hidden' name='_method' value='delete'>
-    <input style="display: inline-block;" class="btn btn-logout btn-lg" type='submit' value='Log Out'>
+    <input id="logout-btn" style="display: inline-block;" class="btn btn-logout btn-lg" type='submit' value='Log Out'>
   </form>
-  <a style="display: inline-block;" class="btn btn-light btn-lg" href="/users/<%=current_user.id%>">Your Travel History</a>
+  <a id="travel-history-btn" style="display: inline-block;" class="btn btn-light btn-lg" href="/users/<%=current_user.id%>">Your Travel History</a>
+</div>
+
 <% end %>
 <%= yield %>
+</div>
 </body>
 </html>
