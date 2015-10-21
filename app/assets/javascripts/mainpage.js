@@ -91,12 +91,12 @@ function displayMap(position) {
           console.log(nearest_loc);
           geocoder.geocode({'address': originList[i]},
               showGeocodedAddressOnMap(false));
-            geocoder.geocode({'address': nearest_address},
-                showGeocodedAddressOnMap(true));
-            originDiv.innerHTML +=  originList[i];
-            destinationDiv.innerHTML += nearest_address +
-                ': ' + nearest_loc.distance.text + ' in ' +
-                nearest_loc.duration.text;
+          geocoder.geocode({'address': nearest_address},
+              showGeocodedAddressOnMap(true));
+          originDiv.innerHTML +=  originList[i];
+          destinationDiv.innerHTML += nearest_address +
+              ': ' + nearest_loc.distance.text + ' in ' +
+              nearest_loc.duration.text;
         }
       }
     });
