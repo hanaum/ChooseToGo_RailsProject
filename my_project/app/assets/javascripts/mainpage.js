@@ -94,7 +94,7 @@ function displayMap(position) {
             geocoder.geocode({'address': nearest_address},
                 showGeocodedAddressOnMap(true));
             originDiv.innerHTML +=  originList[i];
-            destinationDiv.innerHTML += nearest_loc_name + ' at ' + nearest_address +
+            destinationDiv.innerHTML += nearest_address +
                 ': ' + nearest_loc.distance.text + ' in ' +
                 nearest_loc.duration.text;
         }
